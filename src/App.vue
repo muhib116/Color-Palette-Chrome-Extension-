@@ -1,34 +1,17 @@
 <template>
-  <div class="w-[350px] max-h-[500px] overflow-y-auto border p-6 bg-white text-gray-800 dark:text-white dark:bg-gray-800">
+  <div class="w-[350px] max-h-[500px] overflow-y-auto select-none border p-6 bg-white text-gray-800 dark:text-white dark:bg-gray-800">
     <FileUpload />
     <div 
       class="space-y-4 mt-6"
       v-if="!isColorProcessing"
     >
-      <div v-if="colorPalette.length">
-        <h2 class="text-md font-medium mb-2">Color Palette</h2>
-        <div class="grid grid-cols-5 gap-3">
-          <ColorBox
-            v-for="(color, index) in colorPalette"
-            :key="index"
-            :color="color"
-          />
-        </div>
-      </div>
-
-      <div v-if="complementaryPalette.length">
-        <h2 class="text-md font-medium mb-2">Complementary Color Palette</h2>
-        <div class="grid grid-cols-5 gap-3">
-          <ColorBox
-            v-for="(color, index) in complementaryPalette"
-            :key="index"
-            :color="color"
-          />
-        </div>
-      </div>
+      <ColorPalette />
+      <ComplementaryColor />
     </div>
-    <div v-else>
-      Color processing...
+
+    <div v-else class="flex justify-center my-4 gap-2 items-center">
+      <svg class="w-6 h-6 animate-spin" width="800" height="800" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-opacity=".3" stroke-width="2"/><path fill="currentColor" fill-opacity=".6" fill-rule="nonzero" d="M7 0a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"/></g></svg>
+      Processing...
     </div>
 
     <img
@@ -39,16 +22,16 @@
 </template>
 
 <script setup>
-  import { provide } from 'vue';
+  import { provide, ref } from 'vue';
   import { usePalette } from './usePalette'
   import FileUpload from '@/fragments/FileUpload.vue'
-  import ColorBox from '@/fragments/ColorBox.vue'
+  import ColorPalette from '@/fragments/ColorPalette.vue'
+  import ComplementaryColor from '@/fragments/ComplementaryColor.vue'
 
   const {
     isColorProcessing,
-    colorPalette,
-    complementaryPalette,
-    previewImg
+    previewImg,
+    getComplementaryColor
   } = usePalette()
 
   provide('usePalette', usePalette())

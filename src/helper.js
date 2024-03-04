@@ -51,6 +51,20 @@ export const rgbToHex = (pixel) => {
       componentToHex(pixel.b)
     ).toUpperCase();
 };
+
+// write function that convert hex color to rgb color
+export const hexToRgb = (hex) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : {
+      r: 0,
+      g: 0,
+      b: 0
+    }
+}
   
 /**
  * Convert HSL to Hex
@@ -274,4 +288,17 @@ export const quantization = (rgbValues, depth) => {
       ...quantization(rgbValues.slice(0, mid), depth + 1),
       ...quantization(rgbValues.slice(mid + 1), depth + 1),
     ];
+}
+
+// write a function that takes a color and returns the complementary color
+export const getComplementaryColor = (color) => {
+  console.log(color)
+  color = hexToRgb(color)
+  const rgb = {
+      r: 255 - color.r,
+      g: 255 - color.g,
+      b: 255 - color.b,
+  };
+  const complementaryColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`
+  return complementaryColor;
 }

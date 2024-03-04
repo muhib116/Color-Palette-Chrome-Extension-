@@ -1,8 +1,7 @@
 import { ref } from 'vue'
 import {
     buildPalette,
-    rgbToHex,
-    hslToHex,
+    getComplementaryColor,
     buildRgb,
     quantization,
 } from './helper.js'
@@ -34,8 +33,9 @@ export const usePalette = () =>
             img.onload = () => {
                 canvas.width = img.width
                 canvas.height = img.height
-                ctx.drawImage(img, 0, 0, img.width, img.height)
-                const imageData = ctx.getImageData(0, 0, img.width, img.height)
+                ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 300, Math.floor((300 * img.height) / img.width))
+
+                const imageData = ctx.getImageData(0, 0, 300, Math.floor((300 * img.height) / img.width));
                 const data = imageData.data
                 const rgbValues = []
                 
@@ -69,11 +69,19 @@ export const usePalette = () =>
         }
     }
 
+    window.addEventListener('paste', (e) => {
+        fileProcess({target: {
+                files: e.clipboardData.files
+            }
+        })
+    })
+
     return {
         fileProcess,
         colorPalette,
         complementaryPalette,
         previewImg,
-        isColorProcessing
+        isColorProcessing,
+        getComplementaryColor
     }
 }
