@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[400px] border p-6 bg-white text-gray-800 dark:text-white dark:bg-gray-800">
+  <div class="w-[350px] max-h-[500px] overflow-y-auto border p-6 bg-white text-gray-800 dark:text-white dark:bg-gray-800">
     <FileUpload />
     <div 
       class="space-y-4 mt-6"
@@ -7,7 +7,7 @@
     >
       <div v-if="colorPalette.length">
         <h2 class="text-md font-medium mb-2">Color Palette</h2>
-        <div class="flex flex-wrap gap-3">
+        <div class="grid grid-cols-5 gap-3">
           <ColorBox
             v-for="(color, index) in colorPalette"
             :key="index"
@@ -18,7 +18,7 @@
 
       <div v-if="complementaryPalette.length">
         <h2 class="text-md font-medium mb-2">Complementary Color Palette</h2>
-        <div class="flex flex-wrap gap-3">
+        <div class="grid grid-cols-5 gap-3">
           <ColorBox
             v-for="(color, index) in complementaryPalette"
             :key="index"
